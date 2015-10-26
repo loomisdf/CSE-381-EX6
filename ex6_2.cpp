@@ -40,12 +40,12 @@ createThreads(const std::vector<long>& numberList,
 	for(int i = 0; i < thrCount; i++) {
 		int start = i*numPerThread;
 		if(i < thrCount - 1){
-			threads.push_back(std::thread(primeCheck, numberList, isPrimeList, start, start + numPerThread - 1);
+			threads.push_back(std::thread(primeCheck, std::ref(numberList), std::ref(isPrimeList), start, start + numPerThread - 1));
 		}
 		else{
-			threads.push_back(std::thread(primeCheck, numberList, isPrimeList, start, start + numLastThread - 1);
+			threads.push_back(std::thread(primeCheck, std::ref(numberList), std::ref(isPrimeList), start, start + numLastThread - 1));
 		}
-	
+
 	}
 	return threads;
 }
@@ -56,7 +56,7 @@ createThreads(const std::vector<long>& numberList,
 
 /**
  * The thread method.
- * 
+ *
  * This method iterates over the given range of values to determine a
  * number is prime.
  *
@@ -111,10 +111,9 @@ const std::string INSUFFICIENT_ARGS =
 int main(int argc, char *argv[]) {
     if (argc < 3) {
         std::cerr << INSUFFICIENT_ARGS;
-        return 1;
-    }
+	}
     // Load the data from the file.
-    std::vector<long> numberList = loadData(argv[1]);
+    std::vector<long> numberList = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };//loadData(argv[1]);
     std::vector<bool> isPrimeList(numberList.size());
 
     // Create the specified number of threads to process numbers with
