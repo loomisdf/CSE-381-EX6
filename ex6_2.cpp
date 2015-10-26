@@ -34,6 +34,20 @@ std::vector<std::thread>
 createThreads(const std::vector<long>& numberList,
               std::vector<bool>& isPrimeList, const int thrCount) {
     // Suitably implement this method
+	int numPerThread = numberList.size()/thrCount;
+	int numLastThread = numberList.size()/thrCount + numberList.size()%thrCount;
+	std::vector<std::thread> threads;
+	for(int i = 0; i < thrCount; i++) {
+		int start = i*numPerThread;
+		if(i < thrCount - 1){
+			threads.push_back(std::thread(primeCheck, numberList, isPrimeList, start, start + numPerThread - 1);
+		}
+		else{
+			threads.push_back(std::thread(primeCheck, numberList, isPrimeList, start, start + numLastThread - 1);
+		}
+	
+	}
+	return threads;
 }
 
 //-------------------------------------------------------------
